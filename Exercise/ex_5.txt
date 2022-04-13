@@ -1,0 +1,29 @@
+5、取得平均薪水最高的部门的部门编号
+
+1、先求每个部门平均薪水，按部门分组，avg(sal)
+select
+	e.deptno, avg(sal) avgsal
+from
+	emp e
+group by
+	e.deptno
+
+2 、取出最大值,降序取第一个
+select
+	t.deptno
+from
+	(select e.deptno, avg(sal) avgsal from emp e group by e.deptno) t
+order by
+	t.avgsal desc
+limit 1;
+
+
+# 2 方法二
+select
+	deptno, avg(sal) avgsal
+from
+	emp
+group by
+	deptno
+having
+	avgsal = (select max(avgsal) from (select avg(sal) as avgsal from emp group by deptno) t);

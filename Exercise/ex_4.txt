@@ -1,0 +1,31 @@
+4、不准用组函数（Max），取得最高薪水（给出两种解决方案）
+
+# 1排序,降序，取第一个
+select
+	sal
+from
+	emp e
+order by
+	e.sal desc
+limit 1;
+
+
+# 2
+select max(sal) as maxsal from emp;
+
+
+# 3 表的连接
+select
+	sal
+from
+	emp
+where
+	sal not in (select distinct a.sal from emp a join emp b on a.sal < b.sal);
+
+
+解释：
+select a.sal from emp a join emp b on a.sal < b.sal  这个语句产生89种情况（a.sal和b的每一个b.sal比较），只要a.sal < b.sal，就产生一个记录，记录a.sal
+
+distinct 把重复记录去掉了，每个只保持一个记录
+
+因为5000为最大值，在a.sal < b.sal中，没有满足条件的，所以这个表中不会出现5000的记录。

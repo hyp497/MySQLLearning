@@ -1,0 +1,46 @@
++-------+-------+-------+
+| GRADE | LOSAL | HISAL |
++-------+-------+-------+
+|     1 |   700 |  1200 |
+|     2 |  1201 |  1400 |
+|     3 |  1401 |  2000 |
+|     4 |  2001 |  3000 |
+|     5 |  3001 |  9999 |
++-------+-------+-------+
+
+3、取得部门中（所有人的）平均的薪水等级
+
+#1、按部门分组，求sal均值
+select
+	e.deptno, avg(sal) as avgsal
+from
+	emp e
+group by
+	e.deptno;
+
+#2、取等级
+select
+	t.deptno, s.grade
+from
+	(select e.deptno, avg(sal) as avgsal from emp e group by e.deptno) t
+join
+	salgrade s
+on
+	t.avgsal between s.losal and s.hisal;
+
+
+参考答案(先求的是每个人的薪水等级，然后按部门分组，求等级的平均值)
+select
+	e.deptno, avg(s.grade)
+from
+	emp e
+join
+	salgrade s
+on
+	e.sal between s.losal and s.hisal
+group by
+	e.deptno;
+
+
+
+
