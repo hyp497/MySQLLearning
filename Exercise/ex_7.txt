@@ -1,0 +1,28 @@
+7、求平均薪水的等级最低的部门的部门名称
+
+# 1
+1、按部分分组,avg(dal)
+2、升序第一个
+3、联合dept表
+
+select
+    dname
+from
+    (select e.deptno, avg(e.sal) avgsal from emp e group by e.deptno order by avgsal limit 1) t
+join
+    dept d
+on
+    d.deptno = t.deptno;
+
+
+参考答案：
+select
+    t.*, s.grade
+from
+    (select d.dname, avg(sal) as avgsal from emp e join dept d on e.deptno = d.deptno group by d.dname) t
+join
+    salgrade s
+on
+    t.avgsal between s.losal and s.hisal
+where
+    s.grade = (select grade from salgrade where (select avg(sal) as avgsal from emp group by deptno order by avgsal asc limit 1) between losal and hisal);

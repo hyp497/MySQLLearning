@@ -1,0 +1,44 @@
+8、取得比普通员工(员工代码没有在 mgr 字段上出现的)的最高薪水还要高的领导人姓名
+
+select
+    e.ename
+from
+    (select e.ename from emp e where e.empno not in e.mgr)#错误，not in 在使用的使用，要保证这个字段里面没有null
+
+
+
+select distinct mgr from emp where mgr is not null;
+
+
+select e.ename from emp e where e.empno not in (select distinct mgr from emp where mgr is not null)  # 普通员工名单
+
+select max(e.sal) maxsal from emp e where e.empno not in (select distinct e.mgr from emp e where mgr is not null); # 普通员工最高薪水
+
+大于普通员工的最高薪水，那肯定是领导人
+
+答案：
+select
+    e.ename
+from 
+    emp e
+where
+    e.sal > (select max(e.sal) maxsal from emp e where e.empno not in (select distinct e.mgr from emp e where mgr is not null));
+
+另外一种解法：更安全一点
+找出领导人
+select
+    e.ename
+from
+    emp e
+where
+    e.empno in (select distinct mgr from emp where mgr is not null);
+
+
+找出领导人中工资大于普通员工的最高薪水的
+
+select
+    e.ename
+from
+    emp e
+where
+    e.empno in (select distinct mgr from emp where mgr is not null) and e.sal > (select max(e.sal) maxsal from emp e where e.empno not in (select distinct e.mgr from emp e where mgr is not null));

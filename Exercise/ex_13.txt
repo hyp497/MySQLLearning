@@ -1,0 +1,98 @@
+13、
+有 3 个表 S(学生表)，C（课程表），SC（学生选课表）
+S（SNO，SNAME）代表（学号，姓名）
+C（CNO，CNAME，CTEACHER）代表（课号，课名，教师）
+SC（SNO，CNO，SCGRADE）代表（学号，课号，成绩）
+问题：
+1，找出没选过“黎明”老师的所有学生姓名。
+2，列出 2 门以上（含 2 门）不及格学生姓名及平均成绩。
+3，即学过 1 号课程又学过 2 号课所有学生的姓名。
+请用标准 SQL 语言写出答案，方言也行（请说明是使用什么方言）
+
+
+1、
+首先找出黎明老师的课号
+select
+    cno
+from
+    C
+where
+    cteacher = '黎明';
+
+找出选了黎明老师的学生的学号
+select
+    sno
+from
+    SC
+where
+    cno = (select cno from C where cteacher = '黎明');
+
+然后join
+select
+    stu.*
+from
+    S stu
+join
+    (select
+        sno
+    from
+        SC
+    where
+        cno = (select cno from C where cteacher = '黎明')) t
+on
+    stu.sno = t.sno;
+
+
+2、列出 2 门以上（含 2 门）不及格学生姓名及平均成绩。
+
+统计2门以上不及格同学的学号
+(select
+    sno, count(sno) as shu
+from
+    sc
+where
+    scgrade < 60
+group by
+    sno
+having
+    shu >= 2) l
+
+
+计算每个人的平均成绩
+(select
+    sno, avg(scgrade) avgdrade
+from
+    sc
+group by
+    sno) t
+
+最后 三个表合并join
+select
+    stu.sno, stu.sname, t.avggrade
+from
+    s stu
+join
+    (select
+    sno, count(sno) as shu
+    from
+    sc
+    where
+    scgrade < 60
+    group by
+    sno
+    having
+    shu >= 2) l
+on
+    l.sno = stu.sno
+join
+    (select
+    sno, avg(scgrade) as avggrade
+    from
+    sc
+    group by
+    sno) t
+on
+    stu.sno = t.sno;
+
+
+3、TODO 写到这里

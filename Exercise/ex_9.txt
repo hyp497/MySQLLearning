@@ -1,0 +1,15 @@
+9、取得薪水最高的前五名员工
+
+#1
+1、获取员工名单，排序，取前五
+
+select
+    e.ename, e.sal
+from
+    emp e
+where
+    e.deptno not in (select distinct mgr from emp where mgr is not null)
+order by
+    e.sal desc
+limit
+    5;

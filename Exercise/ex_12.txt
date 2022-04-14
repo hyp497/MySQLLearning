@@ -1,0 +1,12 @@
+12、取得每个薪水等级有多少员工
+
+select
+    s.grade, count(e.ename)
+from
+    emp e
+join
+    salgrade S
+on
+    e.sal between s.losal and s.hisal
+group by
+    s.grade;

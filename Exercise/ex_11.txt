@@ -1,0 +1,11 @@
+11、取得最后入职的 5 名员工
+
+日期降序、升序
+select
+    e.ename, e.hiredate
+from
+    emp e
+order by
+    e.hiredate desc
+limit 
+    5;

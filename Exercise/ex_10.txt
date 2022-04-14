@@ -1,0 +1,10 @@
+10、取得薪水最高的第六到第十名员工
+
+select
+    e.ename, e.sal
+from
+    emp e
+order by
+    e.sal desc
+limit
+    5, 5;
