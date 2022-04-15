@@ -1,0 +1,8 @@
+18、列出薪金比"SMITH"多的所有员工信息.
+
+select 
+    e.*
+from
+    emp e 
+where
+    e.sal > (select sal from emp where ename = 'smith');

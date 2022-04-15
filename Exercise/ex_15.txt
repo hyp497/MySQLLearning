@@ -1,0 +1,14 @@
+15、列出受雇日期早于其直接上级的所有员工的编号,姓名,部门名称
+
+
+select 
+    e.*, b.hiredate
+from 
+    emp e
+join
+    emp b 
+on
+    e.mgr = b.empno
+
+where 
+    e.hiredate < b.hiredate;

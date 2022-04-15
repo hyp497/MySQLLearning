@@ -1,0 +1,11 @@
+17、列出至少有 5 个员工的所有部门
+
+
+select
+    e.deptno, count(e.ename) as number
+from
+    emp e 
+group by
+    e.deptno
+having
+    number >= 5;

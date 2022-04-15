@@ -95,4 +95,42 @@ on
     stu.sno = t.sno;
 
 
-3、TODO 写到这里
+3、
+select 
+    sno 
+from 
+    sc 
+where
+    cno = '1'  # 选了1号课的学生
+
+select 
+    sno
+from
+    sc
+where
+    cno = '2';  # 选了2号课的学生
+
+
+# 选了1号课和2号课的同学
+select
+    t1.sno, stu.sname
+from
+    (select 
+        sno 
+    from 
+        sc 
+    where
+        cno = '1') t1
+join
+    (select 
+        sno
+    from
+        sc
+    where
+        cno = '2') t2 
+on
+    t1.sno = t2.sno
+join
+    S stu
+on
+    t1.sno = stu.sno;
