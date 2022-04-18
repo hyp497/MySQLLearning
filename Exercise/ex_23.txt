@@ -1,0 +1,23 @@
+23、列出与"SCOTT"从事相同工作的所有员工及部门名称.
+
+select 
+    e.job
+from 
+    emp e
+where 
+    e.ename = 'scott';
+
+
+
+select
+    e.ename, d.dname
+from 
+    emp e 
+join 
+    dept d 
+on 
+    e.deptno = d.deptno
+where 
+    e.job = (select job from emp where ename = 'scott')
+and
+    e.ename <> 'scott';   # 加上这个，把scott排除在外

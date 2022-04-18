@@ -1,0 +1,51 @@
+19、列出所有"CLERK"(办事员)的姓名及其部门名称,部门的人数.
+
+select 
+    e.*, d.*
+from
+    emp e 
+join
+    dept as d
+on
+    e.deptno = d.deptno
+where  
+    e.job = "clerk";
+
+
+select  
+    e.ename, e.job, d.dname, d.deptno, e.sal
+from   
+    emp e
+join 
+    dept d 
+on 
+    e.deptno = d.deptno
+where
+    e.job = 'clerk';
+
+
+部门的人数
+select 
+    e.deptno, count(*)
+from
+    emp e
+group by
+    e.deptno;
+
+
+两个表join
+
+select 
+    e.ename, d.dname, c.number
+from
+    emp e 
+join
+    dept d 
+on
+    e.deptno = d.deptno
+join
+    (select e.deptno, count(*) as number from emp e group by e.deptno) c 
+on
+    e.deptno = c.deptno
+where 
+    e.job = 'clerk';

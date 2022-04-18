@@ -1,0 +1,11 @@
+20、列出最低薪金大于 1500 的各种工作及从事此工作的全部雇员人数.
+
+
+select 
+    e.job, count(*)
+from
+    emp e 
+group by 
+    e.job
+having 
+    min(sal) > 1500;

@@ -1,0 +1,18 @@
+21、列出在部门"SALES"<销售部>工作的员工的姓名,假定不知道销售部的部
+门编号.
+
+先查销售部编号
+select
+    d.deptno
+from
+    dept d 
+where 
+    d.dname = 'sales';
+
+
+select 
+    e.ename, e.deptno
+from   
+    emp e 
+where
+    e.deptno = (select deptno from dept d where d.dname = 'sales');

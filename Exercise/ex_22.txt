@@ -1,0 +1,27 @@
+22、列出薪金高于公司平均薪金的所有员工,所在部门,上级领导,雇员的工资等
+级.
+
+
+select
+    e.*
+from 
+    emp e
+where 
+    e.sal > (select avg(sal) from emp);
+
+答案：
+
+select 
+    e.ename, e.deptno, e.sal, s.ename, sa.grade
+from
+    emp e
+left join
+    emp s 
+on 
+    e.mgr = s.empno
+left join 
+    salgrade sa
+on 
+    e.sal between sa.losal and sa.hisal
+where 
+    e.sal > (select avg(sal) from emp);
