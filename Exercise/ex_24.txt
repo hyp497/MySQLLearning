@@ -1,0 +1,48 @@
+24、列出薪金等于部门 30 中员工的薪金的其他员工的姓名和薪金.
+
+SELECT
+	e.*
+FROM
+	emp e
+WHERE
+	e.deptno = 30;
+	
+	
+SELECT
+	e.*
+FROM
+	emp e
+WHERE
+	e.deptno <> 30;
+	
+	
+两个表合并
+SELECT
+	s.ename, s.sal
+FROM
+	(SELECT
+		e.*
+	FROM
+		emp e
+	WHERE
+		e.deptno = 30) s 
+join
+	(SELECT
+		e.*
+	FROM
+		emp e
+	WHERE
+		e.deptno <> 30) t 
+ON
+	s.sal = t.sal;
+	
+答案：
+
+SELECT
+	e.ename, e.sal
+FROM
+	emp e 
+WHERE
+	e.sal in (SELECT DISTINCT sal FROM emp where deptno = 30)
+AND
+	e.deptno <> 30;

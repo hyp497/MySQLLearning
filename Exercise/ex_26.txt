@@ -1,0 +1,22 @@
+26、列出在每个部门工作的员工数量,平均工资和平均服务期限.
+
+SELECT
+	deptno, COUNT(empno), AVG(sal)
+FROM
+	emp
+GROUP BY
+	deptno;
+	
+	
+答案：
+
+SELECT
+	d.dname, count(e.ename) ecount, ifnull(AVG(e.sal), 0) avgsal, ifnull(AVG(timestampdiff(YEAR, hiredate, now())), 0) AS avgtime
+from
+	emp e
+right join
+	dept d 
+on
+	e.deptno = d.deptno
+group BY
+	d.deptno;

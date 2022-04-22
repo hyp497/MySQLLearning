@@ -1,0 +1,16 @@
+25、列出薪金高于在部门 30 工作的所有员工的薪金的员工姓名和薪金.部门名
+称.
+
+SELECT
+	t.ename, t.sal, d.dname
+FROM
+	(SELECT
+		ename, sal, deptno
+	FROM
+		emp
+	WHERE
+		sal > (SELECT max(sal) FROM emp where deptno = 30)) t 
+join
+	dept d 
+ON
+	t.deptno  = d.deptno;
