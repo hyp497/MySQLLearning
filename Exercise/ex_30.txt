@@ -1,0 +1,11 @@
+30、列出各个部门的 MANAGER(领导)的最低薪金
+
+
+select
+	deptno, min(e.sal)
+from
+	emp e 
+where
+	e.job = 'MANAGER'
+group  by
+	e.deptno;

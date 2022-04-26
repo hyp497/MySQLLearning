@@ -1,0 +1,22 @@
+28、列出所有部门的详细信息和人数
+
+select
+	d.deptno, count(e.empno) as num
+from
+	dept d
+left join
+	emp e
+on
+	e.deptno = d.deptno
+group by
+	d.deptno;
+	
+
+select
+	d.deptno, d.dname, d.loc, t.num
+from
+	dept d 
+join
+	(select d.deptno as deptno, count(e.empno) as num from dept d left join emp e on e.deptno = d.deptno group by d.deptno) as t
+on
+	t.deptno = d.deptno;

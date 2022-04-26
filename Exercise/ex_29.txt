@@ -1,0 +1,19 @@
+29、列出各种工作的最低工资及从事此工作的雇员姓名
+
+select 
+	e.job, min(e.sal)
+from
+	emp e 
+group by 
+	e.job;
+	
+	
+	
+select 
+	e.ename, e.job, t.minsal
+from 
+	emp e 
+join
+	(select e.job job, min(e.sal) minsal from emp e group by e.job) t
+on
+	t.minsal = e.sal;

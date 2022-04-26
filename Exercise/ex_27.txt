@@ -1,0 +1,10 @@
+27、列出所有员工的姓名、部门名称和工资。
+
+SELECT
+	e.ename, e.sal, d.dname
+FROM
+	emp e 
+join
+	dept d 
+ON
+	e.deptno = d.deptno;
